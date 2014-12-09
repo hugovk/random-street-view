@@ -15,7 +15,8 @@ except:
 # 25,000 image requests per 24 hours
 # See https://developers.google.com/maps/documentation/streetview/
 API_KEY = "INSERT_YOUR_API_KEY_HERE"
-GOOGLE_URL = "http://maps.googleapis.com/maps/api/streetview?sensor=false&size=640x640&key=" + API_KEY
+GOOGLE_URL = ("http://maps.googleapis.com/maps/api/streetview?sensor=false&"
+              "size=640x640&key=" + API_KEY)
 
 IMG_PREFIX = "img_"
 IMG_SUFFIX = ".jpg"
@@ -48,8 +49,9 @@ def point_inside_polygon(x, y, poly):
 print "Loading borders"
 shape_file = "TM_WORLD_BORDERS-0.3.shp"
 if not os.path.exists(shape_file):
-    print "Cannot find " + shape_file + ". Please download it from "
-    "http://thematicmapping.org/downloads/world_borders.php and try again."
+    print("Cannot find " + shape_file + ". Please download it from "
+          "http://thematicmapping.org/downloads/world_borders.php "
+          "and try again.")
     sys.exit()
 
 sf = shapefile.Reader(shape_file)
@@ -91,6 +93,8 @@ try:
             url = GOOGLE_URL + "&location=" + lat_lon
             try:
                 urllib.urlretrieve(url, outfile)
+            except KeyboardInterrupt:
+                sys.exit("exit")
             except:
                 pass
             if os.path.isfile(outfile):
@@ -98,7 +102,7 @@ try:
                 # Note: hardcoded based on current size of default.
                 # Might change.
                 # Will definitely change if you change requested image size.
-                if os.path.getsize(outfile) == 8377:  # bytes
+                if os.path.getsize(outfile) == 8381:  # bytes
                     print "    No imagery"
                     imagery_misses += 1
                     os.remove(outfile)
