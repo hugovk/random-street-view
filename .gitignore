@@ -52,3 +52,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+*.jpg
+TM_WORLD_BORDERS*
