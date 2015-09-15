@@ -9,7 +9,7 @@ import urllib
 try:
     import timing
 except:
-    pass
+    continue
 
 # Google Street View Image API
 # 25,000 image requests per 24 hours
@@ -102,7 +102,7 @@ try:
                 # Note: hardcoded based on current size of default.
                 # Might change.
                 # Will definitely change if you change requested image size.
-                if os.path.getsize(outfile) == 8381:  # bytes
+                if os.path.getsize(outfile) == 8661:  # bytes
                     print "    No imagery"
                     imagery_misses += 1
                     os.remove(outfile)
