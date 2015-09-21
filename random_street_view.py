@@ -19,9 +19,6 @@ API_KEY = "INSERT_YOUR_API_KEY_HERE"
 GOOGLE_URL = ("http://maps.googleapis.com/maps/api/streetview?sensor=false&"
               "size=640x640&key=" + API_KEY)
 
-IMG_PREFIX = "img_"
-IMG_SUFFIX = ".jpg"
-
 parser = argparse.ArgumentParser(
     description="Get random Street View images from a given country")
 parser.add_argument('country',  help='ISO 3166-1 Alpha-3 Country Code')
@@ -100,7 +97,7 @@ try:
                 image = req.read()
                 # get_color returns the main color of image
                 color = getcolor.get_color(image)
-                if color[0] == '#e3e2dd': # the color may be also "e3e2de", you should try on your platform
+                if color[0] == '#e3e2dd' or color[0] == "e3e2de":
                     print "    No imagery"
                     imagery_misses += 1
                 else:

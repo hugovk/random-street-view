@@ -1,3 +1,4 @@
+# http://charlesleifer.com/blog/using-python-and-k-means-to-find-the-dominant-colors-in-images/
 from collections import namedtuple
 from math import sqrt
 import random
