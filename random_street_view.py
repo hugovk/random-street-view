@@ -15,7 +15,7 @@ except:
 # Google Street View Image API
 # 25,000 image requests per 24 hours
 # See https://developers.google.com/maps/documentation/streetview/
-API_KEY = "AIzaSyBtXuTjykaru8YrSkoZ9u8ZB6Ktld43ywo"
+API_KEY = "INSERT_YOUR_API_KEY_HERE"
 GOOGLE_URL = ("http://maps.googleapis.com/maps/api/streetview?sensor=false&"
               "size=640x640&key=" + API_KEY)
 
