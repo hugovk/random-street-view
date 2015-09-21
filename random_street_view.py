@@ -4,12 +4,13 @@ import random
 import shapefile  # http://code.google.com/p/pyshp/
 import sys
 import urllib
+import getcolor
 
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
 except:
-    continue
+    pass
 
 # Google Street View Image API
 # 25,000 image requests per 24 hours
@@ -98,11 +99,11 @@ try:
             except:
                 pass
             if os.path.isfile(outfile):
-                # Check size and delete "Sorry, we have no imagery here".
-                # Note: hardcoded based on current size of default.
-                # Might change.
-                # Will definitely change if you change requested image size.
-                if os.path.getsize(outfile) == 8661:  # bytes
+                print lat_lon
+                # get_color returns the main color of image
+                color = getcolor.get_color(outfile)
+                print color
+                if color[0] == '#e3e2dd' or color[0] == "#e3e2de":
                     print "    No imagery"
                     imagery_misses += 1
                     os.remove(outfile)
