@@ -4,12 +4,13 @@ import random
 import shapefile  # http://code.google.com/p/pyshp/
 import sys
 import urllib
+import getcolor
 
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
 except:
-    continue
+    pass
 
 # Google Street View Image API
 # 25,000 image requests per 24 hours
@@ -88,29 +89,30 @@ try:
             print "  In country"
             country_hits += 1
             lat_lon = str(rand_lat) + "," + str(rand_lon)
-            outfile = os.path.join(
-                args.country, IMG_PREFIX + lat_lon + IMG_SUFFIX)
             url = GOOGLE_URL + "&location=" + lat_lon
             try:
-                urllib.urlretrieve(url, outfile)
+                req = urllib.urlopen(url)
             except KeyboardInterrupt:
                 sys.exit("exit")
             except:
                 pass
-            if os.path.isfile(outfile):
-                # Check size and delete "Sorry, we have no imagery here".
-                # Note: hardcoded based on current size of default.
-                # Might change.
-                # Will definitely change if you change requested image size.
-                if os.path.getsize(outfile) == 8661:  # bytes
+            if req.getcode() == 200:
+                image = req.read()
+                # get_color returns the main color of image
+                color = getcolor.get_color(image)
+                if color[0] == '#e3e2dd': # the color may be also "e3e2de", you should try on your platform
                     print "    No imagery"
                     imagery_misses += 1
-                    os.remove(outfile)
                 else:
                     print "    ========== Got one! =========="
                     imagery_hits += 1
                     if imagery_hits == IMAGES_WANTED:
                         break
+            elif req.getcode() == 403:
+                print("Error http ", req.getcode())
+                sys.exit("exit")
+            else:
+                print("Error http ", req.getcode())
             if country_hits == MAX_URLS:
                 break
 except KeyboardInterrupt:
