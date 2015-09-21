@@ -9,6 +9,7 @@ import getcolor
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
+    assert(timing)  # avoid flake8 warning
 except:
     pass
 
