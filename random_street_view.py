@@ -15,9 +15,12 @@ except:
 # Google Street View Image API
 # 25,000 image requests per 24 hours
 # See https://developers.google.com/maps/documentation/streetview/
-API_KEY = "INSERT_YOUR_API_KEY_HERE"
+API_KEY = "AIzaSyBtXuTjykaru8YrSkoZ9u8ZB6Ktld43ywo"
 GOOGLE_URL = ("http://maps.googleapis.com/maps/api/streetview?sensor=false&"
               "size=640x640&key=" + API_KEY)
+
+IMG_PREFIX = "img_"
+IMG_SUFFIX = ".jpg"
 
 parser = argparse.ArgumentParser(
     description="Get random Street View images from a given country")
@@ -86,30 +89,29 @@ try:
             print "  In country"
             country_hits += 1
             lat_lon = str(rand_lat) + "," + str(rand_lon)
+            outfile = os.path.join(
+                args.country, IMG_PREFIX + lat_lon + IMG_SUFFIX)
             url = GOOGLE_URL + "&location=" + lat_lon
             try:
-                req = urllib.urlopen(url)
+                urllib.urlretrieve(url, outfile)
             except KeyboardInterrupt:
                 sys.exit("exit")
             except:
                 pass
-            if req.getcode() == 200:
-                image = req.read()
+            if os.path.isfile(outfile):
+                print lat_lon
                 # get_color returns the main color of image
-                color = getcolor.get_color(image)
-                if color[0] == '#e3e2dd' or color[0] == "e3e2de":
+                color = getcolor.get_color(outfile)
+                print color
+                if color[0] == '#e3e2dd' or color[0] == "#e3e2de":
                     print "    No imagery"
                     imagery_misses += 1
+                    os.remove(outfile)
                 else:
                     print "    ========== Got one! =========="
                     imagery_hits += 1
                     if imagery_hits == IMAGES_WANTED:
                         break
-            elif req.getcode() == 403:
-                print("Error http ", req.getcode())
-                sys.exit("exit")
-            else:
-                print("Error http ", req.getcode())
             if country_hits == MAX_URLS:
                 break
 except KeyboardInterrupt:
