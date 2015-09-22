@@ -1,7 +1,7 @@
 import argparse
 import os
 import random
-import shapefile  # http://code.google.com/p/pyshp/
+import shapefile  # pip install pyshp
 import sys
 import urllib
 import getcolor

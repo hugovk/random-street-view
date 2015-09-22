@@ -3,7 +3,7 @@ from collections import namedtuple
 from math import sqrt
 import random
 
-from PIL import Image
+from PIL import Image  # pip install pillow
 
 Point = namedtuple('Point', ('coords', 'n', 'ct'))
 Cluster = namedtuple('Cluster', ('points', 'center', 'n'))
