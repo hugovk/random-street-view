@@ -24,7 +24,12 @@ IMG_PREFIX = "img_"
 IMG_SUFFIX = ".jpg"
 
 parser = argparse.ArgumentParser(
-    description="Get random Street View images from a given country")
+    description="Get random Street View images from a given country",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument(
+    '-n', '--images-wanted', type=int,
+    default=10,
+    help="Number of images wanted")
 parser.add_argument('country',  help='ISO 3166-1 Alpha-3 Country Code')
 args = parser.parse_args()
 
@@ -74,7 +79,6 @@ for i, record in enumerate(sf.records()):
 print "Getting images"
 attempts, country_hits, imagery_hits, imagery_misses = 0, 0, 0, 0
 MAX_URLS = 25000
-IMAGES_WANTED = 10
 
 if not os.path.exists(args.country):
     os.makedirs(args.country)
@@ -111,7 +115,7 @@ try:
                 else:
                     print "    ========== Got one! =========="
                     imagery_hits += 1
-                    if imagery_hits == IMAGES_WANTED:
+                    if imagery_hits == args.images_wanted:
                         break
             if country_hits == MAX_URLS:
                 break
