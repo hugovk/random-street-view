@@ -32,8 +32,11 @@ parser.add_argument(
     help="Number of images wanted")
 parser.add_argument('country',  help='ISO 3166-1 Alpha-3 Country Code')
 parser.add_argument(
+    '-hdg', '--heading',
+    help="Heading in degrees: 0 and 360 north, 90 east, 190 south, 270 west")
+parser.add_argument(
     '-p', '--pitch',
-    help="Pitch in degrees")
+    help="Pitch in degrees: 0 is default, 90 straight up, -90 straight down")
 args = parser.parse_args()
 
 
@@ -100,6 +103,8 @@ try:
             outfile = os.path.join(
                 args.country, IMG_PREFIX + lat_lon + IMG_SUFFIX)
             url = GOOGLE_URL + "&location=" + lat_lon
+            if args.heading:
+                url += "&heading=" + args.heading
             if args.pitch:
                 url += "&pitch=" + args.pitch
             try:
