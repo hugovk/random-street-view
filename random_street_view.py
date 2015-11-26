@@ -31,6 +31,9 @@ parser.add_argument(
     default=10,
     help="Number of images wanted")
 parser.add_argument('country',  help='ISO 3166-1 Alpha-3 Country Code')
+parser.add_argument(
+    '-p', '--pitch',
+    help="Pitch in degrees")
 args = parser.parse_args()
 
 
@@ -97,6 +100,8 @@ try:
             outfile = os.path.join(
                 args.country, IMG_PREFIX + lat_lon + IMG_SUFFIX)
             url = GOOGLE_URL + "&location=" + lat_lon
+            if args.pitch:
+                url += "&pitch=" + args.pitch
             try:
                 urllib.urlretrieve(url, outfile)
             except KeyboardInterrupt:
