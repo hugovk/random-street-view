@@ -33,7 +33,7 @@ parser.add_argument(
 parser.add_argument('country',  help='ISO 3166-1 Alpha-3 Country Code')
 parser.add_argument(
     '-hdg', '--heading',
-    help="Heading in degrees: 0 and 360 north, 90 east, 190 south, 270 west")
+    help="Heading in degrees: 0 and 360 north, 90 east, 180 south, 270 west")
 parser.add_argument(
     '-p', '--pitch',
     help="Pitch in degrees: 0 is default, 90 straight up, -90 straight down")
