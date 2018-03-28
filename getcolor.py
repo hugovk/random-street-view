@@ -28,8 +28,8 @@ def get_color(image, n=1):
 
     points = get_points(img)
     clusters = kmeans(points, n, 1)
-    rgbs = [map(int, c.center.coords) for c in clusters]
-    return map(rtoh, rgbs)
+    rgbs = [list(map(int, c.center.coords)) for c in clusters]
+    return list(map(rtoh, rgbs))
 
 
 def euclidean(p1, p2):
