@@ -33,7 +33,7 @@ def get_color(image, n=1):
 
 
 def euclidean(p1, p2):
-    return sqrt(sum([(p1.coords[i] - p2.coords[i]) ** 2 for i in range(p1.n)]))
+    return sqrt(sum((p1.coords[i] - p2.coords[i]) ** 2 for i in range(p1.n)))
 
 
 def calculate_center(points, n):
