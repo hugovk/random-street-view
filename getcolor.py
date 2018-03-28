@@ -18,7 +18,7 @@ def get_points(img):
 
 
 def rtoh(rgb):
-    '#%s' % ''.join(('%02x' % p for p in rgb))
+    return '#%s' % ''.join(('%02x' % p for p in rgb))
 
 
 def get_color(image, n=1):
@@ -49,7 +49,7 @@ def calculate_center(points, n):
 def kmeans(points, k, min_diff):
     clusters = [Cluster([p], p, p.n) for p in random.sample(points, k)]
 
-    while 1:
+    while True:
         plists = [[] for i in range(k)]
 
         for p in points:
