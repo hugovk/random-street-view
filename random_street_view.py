@@ -3,10 +3,19 @@ from __future__ import print_function, unicode_literals
 import argparse
 import os
 import random
-import shapefile  # pip install pyshp
 import sys
-import urllib
+
+import shapefile  # pip install pyshp
+
 import getcolor
+
+try:
+    # Python 3
+    from urllib.request import urlretrieve
+except ImportError:
+    # Python 2
+    from urllib import urlretrieve
+
 
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
@@ -111,11 +120,9 @@ try:
             if args.pitch:
                 url += "&pitch=" + args.pitch
             try:
-                urllib.urlretrieve(url, outfile)
+                urlretrieve(url, outfile)
             except KeyboardInterrupt:
                 sys.exit("exit")
-            except Exception:
-                pass
             if os.path.isfile(outfile):
                 print(lat_lon)
                 # get_color returns the main color of image
