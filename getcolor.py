@@ -17,7 +17,8 @@ def get_points(img):
     return points
 
 
-rtoh = lambda rgb: '#%s' % ''.join(('%02x' % p for p in rgb))
+def rtoh(rgb):
+    '#%s' % ''.join(('%02x' % p for p in rgb))
 
 
 def get_color(image, n=1):

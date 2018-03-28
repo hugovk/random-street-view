@@ -10,7 +10,7 @@ import getcolor
 try:
     import timing
     assert(timing)  # avoid flake8 warning
-except:
+except ImportError:
     pass
 
 # Google Street View Image API
@@ -25,7 +25,7 @@ IMG_SUFFIX = ".jpg"
 
 parser = argparse.ArgumentParser(
     description="Get random Street View images from a given country",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument(
     '-n', '--images-wanted', type=int,
     default=10,
@@ -58,6 +58,7 @@ def point_inside_polygon(x, y, poly):
                         inside = not inside
         p1x, p1y = p2x, p2y
     return inside
+
 
 print "Loading borders"
 shape_file = "TM_WORLD_BORDERS-0.3.shp"
@@ -111,7 +112,7 @@ try:
                 urllib.urlretrieve(url, outfile)
             except KeyboardInterrupt:
                 sys.exit("exit")
-            except:
+            except Exception:
                 pass
             if os.path.isfile(outfile):
                 print lat_lon
