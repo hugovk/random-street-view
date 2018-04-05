@@ -17,7 +17,8 @@ def get_points(img):
     return points
 
 
-rtoh = lambda rgb: '#%s' % ''.join(('%02x' % p for p in rgb))
+def rtoh(rgb):
+    return '#%s' % ''.join(('%02x' % p for p in rgb))
 
 
 def get_color(image, n=1):
@@ -27,12 +28,12 @@ def get_color(image, n=1):
 
     points = get_points(img)
     clusters = kmeans(points, n, 1)
-    rgbs = [map(int, c.center.coords) for c in clusters]
-    return map(rtoh, rgbs)
+    rgbs = [list(map(int, c.center.coords)) for c in clusters]
+    return list(map(rtoh, rgbs))
 
 
 def euclidean(p1, p2):
-    return sqrt(sum([(p1.coords[i] - p2.coords[i]) ** 2 for i in range(p1.n)]))
+    return sqrt(sum((p1.coords[i] - p2.coords[i]) ** 2 for i in range(p1.n)))
 
 
 def calculate_center(points, n):
@@ -48,7 +49,7 @@ def calculate_center(points, n):
 def kmeans(points, k, min_diff):
     clusters = [Cluster([p], p, p.n) for p in random.sample(points, k)]
 
-    while 1:
+    while True:
         plists = [[] for i in range(k)]
 
         for p in points:

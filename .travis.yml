@@ -1,0 +1,20 @@
+language: python
+
+python:
+ - "2.7"
+ - "3.6"
+
+install:
+ - pip install pyflakes pycodestyle
+ - pip install -r requirements.txt
+
+script:
+ # Static analysis
+ - pyflakes .
+ - pycodestyle --statistics --count .
+
+ # Dummy run
+ - python random_street_view.py --help
+
+matrix:
+  fast_finish: true

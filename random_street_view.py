@@ -1,16 +1,27 @@
+from __future__ import print_function, unicode_literals
+
 import argparse
 import os
 import random
-import shapefile  # pip install pyshp
 import sys
-import urllib
+
+import shapefile  # pip install pyshp
+
 import getcolor
+
+try:
+    # Python 3
+    from urllib.request import urlretrieve
+except ImportError:
+    # Python 2
+    from urllib import urlretrieve
+
 
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
     assert(timing)  # avoid flake8 warning
-except:
+except ImportError:
     pass
 
 # Google Street View Image API
@@ -25,7 +36,7 @@ IMG_SUFFIX = ".jpg"
 
 parser = argparse.ArgumentParser(
     description="Get random Street View images from a given country",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument(
     '-n', '--images-wanted', type=int,
     default=10,
@@ -59,7 +70,8 @@ def point_inside_polygon(x, y, poly):
         p1x, p1y = p2x, p2y
     return inside
 
-print "Loading borders"
+
+print("Loading borders")
 shape_file = "TM_WORLD_BORDERS-0.3.shp"
 if not os.path.exists(shape_file):
     print("Cannot find " + shape_file + ". Please download it from "
@@ -70,11 +82,11 @@ if not os.path.exists(shape_file):
 sf = shapefile.Reader(shape_file)
 shapes = sf.shapes()
 
-print "Finding country"
+print("Finding country")
 for i, record in enumerate(sf.records()):
     if record[2] == args.country.upper():
-        print record[2], record[4]
-        print shapes[i].bbox
+        print(record[2], record[4])
+        print(shapes[i].bbox)
         min_lon = shapes[i].bbox[0]
         min_lat = shapes[i].bbox[1]
         max_lon = shapes[i].bbox[2]
@@ -82,7 +94,7 @@ for i, record in enumerate(sf.records()):
         borders = shapes[i].points
         break
 
-print "Getting images"
+print("Getting images")
 attempts, country_hits, imagery_hits, imagery_misses = 0, 0, 0, 0
 MAX_URLS = 25000
 
@@ -97,7 +109,7 @@ try:
         # print attempts, rand_lat, rand_lon
         # Is (lat,lon) inside borders?
         if point_inside_polygon(rand_lon, rand_lat, borders):
-            print "  In country"
+            print("  In country")
             country_hits += 1
             lat_lon = str(rand_lat) + "," + str(rand_lon)
             outfile = os.path.join(
@@ -108,33 +120,31 @@ try:
             if args.pitch:
                 url += "&pitch=" + args.pitch
             try:
-                urllib.urlretrieve(url, outfile)
+                urlretrieve(url, outfile)
             except KeyboardInterrupt:
                 sys.exit("exit")
-            except:
-                pass
             if os.path.isfile(outfile):
-                print lat_lon
+                print(lat_lon)
                 # get_color returns the main color of image
                 color = getcolor.get_color(outfile)
-                print color
+                print(color)
                 if color[0] == '#e3e2dd' or color[0] == "#e3e2de":
-                    print "    No imagery"
+                    print("    No imagery")
                     imagery_misses += 1
                     os.remove(outfile)
                 else:
-                    print "    ========== Got one! =========="
+                    print("    ========== Got one! ==========")
                     imagery_hits += 1
                     if imagery_hits == args.images_wanted:
                         break
             if country_hits == MAX_URLS:
                 break
 except KeyboardInterrupt:
-    print "Keyboard interrupt"
+    print("Keyboard interrupt")
 
-print "Attempts:\t", attempts
-print "Country hits:\t", country_hits
-print "Imagery misses:\t", imagery_misses
-print "Imagery hits:\t", imagery_hits
+print("Attempts:\t", attempts)
+print("Country hits:\t", country_hits)
+print("Imagery misses:\t", imagery_misses)
+print("Imagery hits:\t", imagery_hits)
 
 # End of file
