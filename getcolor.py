@@ -1,12 +1,12 @@
 # http://charlesleifer.com/blog/using-python-and-k-means-to-find-the-dominant-colors-in-images/
+import random
 from collections import namedtuple
 from math import sqrt
-import random
 
 from PIL import Image  # pip install pillow
 
-Point = namedtuple('Point', ('coords', 'n', 'ct'))
-Cluster = namedtuple('Cluster', ('points', 'center', 'n'))
+Point = namedtuple("Point", ("coords", "n", "ct"))
+Cluster = namedtuple("Cluster", ("points", "center", "n"))
 
 
 def get_points(img):
@@ -18,13 +18,12 @@ def get_points(img):
 
 
 def rtoh(rgb):
-    return '#%s' % ''.join(('%02x' % p for p in rgb))
+    return "#%s" % "".join("%02x" % p for p in rgb)
 
 
 def get_color(image, n=1):
     img = Image.open(image)
     img.thumbnail((200, 200))
-    w, h = img.size
 
     points = get_points(img)
     clusters = kmeans(points, n, 1)
@@ -42,7 +41,7 @@ def calculate_center(points, n):
     for p in points:
         plen += p.ct
         for i in range(n):
-            vals[i] += (p.coords[i] * p.ct)
+            vals[i] += p.coords[i] * p.ct
     return Point([(v / plen) for v in vals], n, 1)
 
 
@@ -53,7 +52,7 @@ def kmeans(points, k, min_diff):
         plists = [[] for i in range(k)]
 
         for p in points:
-            smallest_distance = float('Inf')
+            smallest_distance = float("Inf")
             for i in range(k):
                 distance = euclidean(p, clusters[i].center)
                 if distance < smallest_distance:

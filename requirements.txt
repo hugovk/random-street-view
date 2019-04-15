@@ -1,2 +1,2 @@
 Pillow
-pyshp
+pyshp>=2
