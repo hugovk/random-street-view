@@ -78,7 +78,7 @@ if not os.path.exists(shape_file):
     )
     sys.exit()
 
-sf = shapefile.Reader(shape_file)
+sf = shapefile.Reader(shape_file, encoding="latin1")
 shapes = sf.shapes()
 
 print("Finding country")
