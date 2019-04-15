@@ -1,21 +1,12 @@
-from __future__ import print_function, unicode_literals
-
 import argparse
 import os
 import random
 import sys
+from urllib.request import urlretrieve
 
 import shapefile  # pip install pyshp
 
 import getcolor
-
-try:
-    # Python 3
-    from urllib.request import urlretrieve
-except ImportError:
-    # Python 2
-    from urllib import urlretrieve
-
 
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:

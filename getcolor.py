@@ -1,7 +1,7 @@
 # http://charlesleifer.com/blog/using-python-and-k-means-to-find-the-dominant-colors-in-images/
+import random
 from collections import namedtuple
 from math import sqrt
-import random
 
 from PIL import Image  # pip install pillow
 
