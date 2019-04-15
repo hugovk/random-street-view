@@ -18,13 +18,12 @@ def get_points(img):
 
 
 def rtoh(rgb):
-    return "#%s" % "".join(("%02x" % p for p in rgb))
+    return "#%s" % "".join("%02x" % p for p in rgb)
 
 
 def get_color(image, n=1):
     img = Image.open(image)
     img.thumbnail((200, 200))
-    w, h = img.size
 
     points = get_points(img)
     clusters = kmeans(points, n, 1)

@@ -10,7 +10,7 @@ You can see <a href="http://support.google.com/maps/bin/answer.py?hl=en&answer=6
 Prerequisites
 -------------
 
- * Python 2.7 or 3.6+
+ * Python 3.6+
  * Install Pillow and the Python Shapefile Library: `pip install pillow pyshp` or `pip install -r requirements.txt`
  * Get the World Borders Dataset (e.g. TM_WORLD_BORDERS-0.3.shp) from http://thematicmapping.org/downloads/world_borders.php
  * Get a Google API key from https://developers.google.com/maps/documentation/streetview/ and put it in the .py file. The API is limited to 25,000 Street View image requests per 24 hours. You can check how much you've used at the <a href="https://code.google.com/apis/console/">console</a>.
