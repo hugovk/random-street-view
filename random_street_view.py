@@ -72,11 +72,10 @@ def point_inside_polygon(x, y, poly):
 print("Loading borders")
 shape_file = "TM_WORLD_BORDERS-0.3.shp"
 if not os.path.exists(shape_file):
-    print(
-        "Cannot find " + shape_file + ". Please download it from "
+    sys.exit(
+        f"Cannot find {shape_file}. Please download it from "
         "http://thematicmapping.org/downloads/world_borders.php and try again."
     )
-    sys.exit()
 
 sf = shapefile.Reader(shape_file, encoding="latin1")
 shapes = sf.shapes()
