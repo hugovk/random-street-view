@@ -5,8 +5,7 @@ in a given country.
 
 Random (lat, lon) co-ordinates are generated from the country's border's bounding box,
 then checked to make sure they're within the actual borders. The corresponding Street
-View image downloaded. Often there is no imagery for the location, so if the size of the
-image matches that of the default "no imagery" thumbnail, it's deleted. Repeat until
+View image downloaded. Repeat until
 required number of images have been fetched.
 
 ## Prerequisites
