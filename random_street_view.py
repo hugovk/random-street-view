@@ -1,9 +1,9 @@
 import argparse
+import json
 import os
 import random
 import sys
-import json
-from urllib.request import urlretrieve, urlopen
+from urllib.request import urlopen, urlretrieve
 
 import shapefile  # pip install pyshp
 
