@@ -9,7 +9,7 @@ View image downloaded. Repeat until required number of images have been fetched.
 
 ## Prerequisites
 
-- Python 3.7+
+- Python 3.9+
 - Install Pillow and the Python Shapefile Library:
   `python -m pip install pillow "pyshp>=2"` or `pip install -r requirements.txt`
 - Get the World Borders Dataset (e.g. TM_WORLD_BORDERS-0.3.shp) from
